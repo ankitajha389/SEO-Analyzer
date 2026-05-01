@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RankLens — SEO Analyzer</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- ── HERO HEADER ── -->
+<header>
+  <div class="hero-bg"></div>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">R</div>
+      <div>
+        <div class="logo-title">RankLens</div>
+        <div class="logo-sub">SEO Intelligence Dashboard</div>
+      </div>
+    </div>
+    <div class="header-pills">
+      <span class="pill">On-Page</span>
+      <span class="pill">Keywords</span>
+      <span class="pill">Technical</span>
+      <span class="pill">SERP Preview</span>
+      <span class="pill">Competitor Compare</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="analyzeTab">
+      <span class="tab-icon">🔍</span> Analyze URL
+    </button>
+    <button class="tab-btn" data-tab="compareTab">
+      <span class="tab-icon">⚔️</span> Compare URLs
+    </button>
+  </div>
+
+  <!-- ── ANALYZE TAB ── -->
+  <div id="analyzeTab" class="tab-content active">
+    <div class="search-box">
+      <div class="search-icon">🌐</div>
+      <input id="urlInput" type="url" placeholder="Enter a URL to analyze  e.g. https://example.com" />
+      <button id="analyzeBtn" class="btn">Analyze <span class="btn-arrow">→</span></button>
+    </div>
+
+    <div id="analyzeError" class="error-msg"></div>
+    <div id="analyzeLoader" class="loader">
+      <div class="loader-ring"></div>
+      <div class="loader-text">Crawling & analyzing<span class="dots"></span></div>
+    </div>
+
+    <div id="analyzeResults" class="results">
+
+      <!-- Score Cards -->
+      <div class="score-cards">
+        <div class="score-card" id="overallCard">
+          <div class="score-label">Overall Score</div>
+          <div class="ring-wrap" id="overallScore"></div>
+          <div class="score-hint" id="overallHint"></div>
+        </div>
+        <div class="score-card">
+          <div class="score-label">On-Page SEO</div>
+          <div class="ring-wrap" id="onPageScore"></div>
+        </div>
+        <div class="score-card">
+          <div class="score-label">Technical SEO</div>
+          <div class="ring-wrap" id="techScore"></div>
+        </div>
+      </div>
+
+      <!-- SERP Preview -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🔎</span>
+          <h3>Google SERP Preview</h3>
+        </div>
+        <div class="serp-wrapper">
+          <div class="serp-google-bar">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google" height="22"/>
+            <div class="serp-fake-search" id="serpFakeSearch"></div>
+          </div>
+          <div class="serp-result">
+            <div class="serp-favicon">🌐</div>
+            <div class="serp-meta">
+              <div class="serp-url" id="serpUrl"></div>
+              <div class="serp-title" id="serpTitle"></div>
+              <div class="serp-desc" id="serpDesc"></div>
+            </div>
+          </div>
+        </div>
+        <div id="serpWarns" class="serp-warns"></div>
+        <div class="char-bars" id="charBars"></div>
+      </div>
+
+      <!-- On-Page Details -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">📄</span>
+          <h3>On-Page Details</h3>
+        </div>
+        <div id="onPageDetails"></div>
+      </div>
+
+      <!-- Issues -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">⚠️</span>
+          <h3>Issues Found</h3>
+        </div>
+        <ul class="issues-list" id="issuesList"></ul>
+      </div>
+
+      <!-- Technical -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">⚙️</span>
+          <h3>Technical SEO</h3>
+        </div>
+        <div id="techChecks" class="tech-grid"></div>
+      </div>
+
+      <!-- Keywords -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🔑</span>
+          <h3>Keyword Analysis</h3>
+        </div>
+        <p id="wordStats" class="word-stats"></p>
+        <div id="keywordsTable"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── COMPARE TAB ── -->
+  <div id="compareTab" class="tab-content">
+    <div class="compare-inputs">
+      <div class="search-box">
+        <div class="search-icon">🅰️</div>
+        <input id="compareUrl1" type="url" placeholder="https://site-a.com" />
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="search-box">
+        <div class="search-icon">🅱️</div>
+        <input id="compareUrl2" type="url" placeholder="https://site-b.com" />
+      </div>
+      <button id="compareBtn" class="btn">Compare <span class="btn-arrow">→</span></button>
+    </div>
+
+    <div id="compareError" class="error-msg"></div>
+    <div id="compareLoader" class="loader">
+      <div class="loader-ring"></div>
+      <div class="loader-text">Comparing both sites<span class="dots"></span></div>
+    </div>
+
+    <div id="compareResults" class="results">
+      <div class="compare-grid">
+        <div class="compare-card" id="site1Card">
+          <div class="compare-card-header site-a">Site A</div>
+          <h4></h4>
+          <div class="compare-score-wrap"><div class="compare-score"></div><div class="compare-score-label">Overall</div></div>
+          <div class="compare-bars"></div>
+          <div class="compare-details"></div>
+        </div>
+        <div class="compare-card" id="site2Card">
+          <div class="compare-card-header site-b">Site B</div>
+          <h4></h4>
+          <div class="compare-score-wrap"><div class="compare-score"></div><div class="compare-score-label">Overall</div></div>
+          <div class="compare-bars"></div>
+          <div class="compare-details"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
