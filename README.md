@@ -50,7 +50,9 @@ node server.js
 # or for auto-reload during development:
 npx nodemon server.js
 ```
-API runs at: http://localhost:8000
+API runs at: 
+Backend : https://seo-analyzer-0nuw.onrender.com/
+Frontend : https://seo-analyzer-1-gp69.onrender.com
 
 ### 4. Open the frontend
 Open `frontend/index.html` directly in your browser.
