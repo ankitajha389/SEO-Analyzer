@@ -68,25 +68,6 @@ async function checkTechnical(url) {
   results.broken_links = broken;
   if (broken.length) { score -= Math.min(15, broken.length * 3); issues.push(`${broken.length} broken internal link(s) found`); }
 
-  // PageSpeed (optional)
-  const key = process.env.PAGESPEED_API_KEY;
-  if (key && key !== "your_google_pagespeed_api_key_here") {
-    try {
-      const ps = await axios.get(
-        `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${key}&strategy=mobile`,
-        { timeout: 20000 }
-      );
-      const audits = ps.data.lighthouseResult.audits;
-      results.core_web_vitals = {
-        LCP: audits["largest-contentful-paint"].displayValue,
-        TBT: audits["total-blocking-time"].displayValue,
-        CLS: audits["cumulative-layout-shift"].displayValue,
-      };
-    } catch { results.core_web_vitals = null; }
-  } else {
-    results.core_web_vitals = null;
-  }
-
   results.score = Math.max(score, 0);
   results.issues = issues;
   return results;
