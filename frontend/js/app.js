@@ -1,4 +1,4 @@
-const API = "https://seo-analyzer-0nuw.onrender.com//api";
+const API = "https://seo-analyzer-0nuw.onrender.com/api";
 
 // ── TABS ──
 document.querySelectorAll(".tab-btn").forEach(btn => {
